@@ -18,35 +18,46 @@ db.on('error', (err) => {
 
 
 let peopleSeeder = () => {
-  axios.get('https://swapi.co/api/people/?page=9')
+  axios.get('https://swapi.co/api/people/?page=')
     .then((response) => {
-        response.data.results.forEach((person) => {
-          console.log(person);
-          if (person.starships.length > 0) {
-            axios.get(person.starships[0])
-              .then((response) => {
-                StarShips.create({
-                  name: response.data.name,
-                  model: response.data.model,
-                  hyperdrive_rating: response.data.hyperdrive_rating,
-                })
-                  .then((starship) => {
-                    People.create({
-                      name: person.name,
-                      gender: person.gender,
-                      starships: starship._id,
-                      rating: person.rating
-                    })
+      response.data.results.forEach((person) => {
+        console.log(person);
+        if (person.starships.length > 0) {
+          axios.get(person.starships[0])
+            .then((response) => {
+              StarShips.create({
+                name: response.data.name,
+                model: response.data.model,
+                hyperdrive_rating: response.data.hyperdrive_rating,
+              })
+                .then((starship) => {
+                  People.create({
+                    name: person.name,
+                    gender: person.gender,
+                    starships: starship._id,
+                    rating: person.rating,
+                    films: person.films
+                  })
                     .then(
                       console.log('SUCCESSFULLY CREATED!!!!!')
                     )
-                  })
-              })
-          }
-        })
+                })
+            })
+        } else {
+          People.create({
+            name: person.name,
+            gender: person.gender,
+            rating: person.rating,
+            films: person.films
+          })
+            .then(
+              console.log('SUCCESSFULLY CREATED TOUR GUIDE')
+            )
+        }
+      })
     })
-  
-  
+
+
 }
 
 peopleSeeder();

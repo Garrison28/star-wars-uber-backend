@@ -7,7 +7,8 @@ const peopleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'StarShips'
   },
-  rating: Number
+  rating: Number,
+  films: []
 })
 
 module.exports = mongoose.model('People', peopleSchema)
