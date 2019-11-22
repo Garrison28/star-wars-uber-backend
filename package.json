@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Garrison28/star-wars-uber-backend#readme",
   "dependencies": {
     "axios": "^0.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.7.12"
   }
